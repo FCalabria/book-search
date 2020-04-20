@@ -591,6 +591,11 @@ video {
   height: auto;
 }
 
+body {
+  background-color: #e6fffa;
+  color: #2d3748;
+}
+
 .container {
   width: 100%;
 }
