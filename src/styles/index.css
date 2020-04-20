@@ -4,6 +4,11 @@ body {
   @apply bg-teal-100 text-gray-800;
 }
 
+* {
+  outline-color: theme('colors.pink.500');
+  outline-width: theme('borderWidth.2')
+}
+
 @tailwind components;
 
 @tailwind utilities;

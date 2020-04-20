@@ -596,6 +596,11 @@ body {
   color: #2d3748;
 }
 
+* {
+  outline-color: #ed64a6;
+  outline-width: 2px
+}
+
 .container {
   width: 100%;
 }
