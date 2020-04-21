@@ -14,8 +14,14 @@ module.exports = {
       serif: ['Georgia', 'Cambria', 'Times', 'serif'],
       mono: ['Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
     },
-    extend: {
-    },
+    minWidth: {
+      '0': '0',
+      '1/3': '33%',
+      '1/2': '50%',
+      'full': '100%',
+    }
   },
-  variants: {},
+  variants: {
+    backgroundColor: ['responsive', 'odd', 'hover', 'focus', 'active']
+  },
 }
