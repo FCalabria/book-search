@@ -1,7 +1,7 @@
 @tailwind base;
 
 body {
-  @apply bg-teal-100 text-gray-800;
+  @apply bg-teal-100 text-gray-800 font-sans;
 }
 
 * {

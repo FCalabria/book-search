@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBar from './components/SearchBar'
 import Loader from './components/Loader'
+import BookDetail from './components/BookDetail'
 import apiFetch from './utils/api'
 
 class App extends React.Component {
@@ -16,9 +17,9 @@ class App extends React.Component {
 
   onNewSearch(searchTerm) {
     this.setState({searchTerm, searchFound: -1})
-    apiFetch(`search.json?q=${encodeURIComponent(searchTerm)}`)
+    apiFetch(`search.json?q=${encodeURIComponent(searchTerm).replace('%20', '+')}&mode=ebooks&page=1`)
       .then(result => this.setState({
-        searchData: result.docs,
+        searchData: result.docs.filter(result => result.isbn),
         searchFound: result.numFound
       }))
   }
@@ -30,6 +31,17 @@ class App extends React.Component {
           {
             (this.state.searchTerm && this.state.searchFound <=0) &&
             <Loader error={this.state.searchFound === 0} searchTerm={this.state.searchTerm}/>
+          }
+          {
+            this.state.searchFound > 0 && (
+            <div className="pt-6">{this.state.searchData.map(searchResult => <BookDetail
+              key={searchResult.isbn[0]}
+              title={searchResult.title}
+              author={searchResult.author_name && searchResult.author_name[0]}
+              year={searchResult.first_publish_year}
+              isbn={searchResult.isbn[0]}
+            />)}</div>
+            )
           }
         </div>
     );
