@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchBar from './components/SearchBar'
+import apiFetch from './utils/api'
 
 class App extends React.Component {
   constructor(props) {
@@ -12,10 +13,9 @@ class App extends React.Component {
   }
 
   onNewSearch(searchTerm) {
-    console.log('MSG: App -> onNewSearch -> searchTerm', searchTerm)
-    this.setState({searchTerm}, () => {
-      console.log(this.state)
-    })
+    this.setState({searchTerm})
+    apiFetch(`search.json?q=${encodeURIComponent(searchTerm)}`)
+      .then(result => this.setState({searchData: result.docs}))
   }
 
   render() {
