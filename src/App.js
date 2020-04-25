@@ -34,7 +34,7 @@ class App extends React.Component {
           }
           {
             this.state.searchFound > 0 && (
-            <div className="pt-6">{this.state.searchData.map(searchResult => <BookDetail
+            <div className="pt-6 w-full">{this.state.searchData.map(searchResult => <BookDetail
               key={searchResult.isbn[0]}
               title={searchResult.title}
               author={searchResult.author_name && searchResult.author_name[0]}
