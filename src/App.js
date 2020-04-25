@@ -11,13 +11,28 @@ class App extends React.Component {
       searchTerm: '',
       searchData: [],
       searchFound: -1,
+      searchStarted: false,
     }
     this.onNewSearch = this.onNewSearch.bind(this)
+    this.onSubjectSearch = this.onSubjectSearch.bind(this)
+    this.onChangeSearchTerm = this.onChangeSearchTerm.bind(this)
   }
 
-  onNewSearch(searchTerm) {
-    this.setState({searchTerm, searchFound: -1})
-    apiFetch(`search.json?q=${encodeURIComponent(searchTerm).replace('%20', '+')}&mode=ebooks&page=1`)
+  onChangeSearchTerm(searchTerm) {
+    this.setState({searchTerm})
+  }
+  onNewSearch() {
+    this.setState({searchFound: -1, searchStarted: true})
+    apiFetch(`search.json?q=${encodeURIComponent(this.state.searchTerm).replace('%20', '+')}&mode=ebooks&has_fulltext=true&page=1`)
+      .then(result => this.setState({
+        searchData: result.docs.filter(result => result.isbn),
+        searchFound: result.numFound
+      }))
+  }
+
+  onSubjectSearch(subject) {
+    this.setState({searchTerm: subject, searchFound: -1})
+    apiFetch(`search.json?subject=${encodeURIComponent(subject).replace('%20', '+')}&mode=ebooks&has_fulltext=true&page=1`)
       .then(result => this.setState({
         searchData: result.docs.filter(result => result.isbn),
         searchFound: result.numFound
@@ -26,10 +41,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={`App flex items-center flex-col absolute inset-0 ${ !this.state.searchTerm ? 'justify-center' : 'mt-4'}`} >
-          <SearchBar onSearch={this.onNewSearch}/>
+      <div className={`App flex items-center flex-col absolute inset-0 ${ !this.state.searchStarted ? 'justify-center' : 'mt-4'}`} >
+          <SearchBar onSearch={this.onNewSearch} onChangeSearch={this.onChangeSearchTerm} term={this.state.searchTerm}/>
           {
-            (this.state.searchTerm && this.state.searchFound <=0) &&
+            (this.state.searchStarted && this.state.searchFound <=0) &&
             <Loader error={this.state.searchFound === 0} searchTerm={this.state.searchTerm}/>
           }
           {
@@ -40,6 +55,8 @@ class App extends React.Component {
               author={searchResult.author_name && searchResult.author_name[0]}
               year={searchResult.first_publish_year}
               isbn={searchResult.isbn[0]}
+              hasSubject={!!searchResult.subject}
+              onSearchSimilar={this.onSubjectSearch.bind(this, searchResult.subject[0])}
             />)}</div>
             )
           }

@@ -1,7 +1,6 @@
 import React from 'react';
 
 function BookDetail(props) {
-  // https://openlibrary.org/images/icons/avatar_book-sm.png
   return (
     <div className="flex flex-wrap md:flex-no-wrap px-3 py-4 odd:bg-teal-300">
       <div className="w-20 sm:w-32 lg:w-40 mr-2 flex-grow-0 flex-shrink-0 bg-pink-200">
@@ -14,7 +13,10 @@ function BookDetail(props) {
         <span className="italic text-gray-700">{props.author}</span>
         <span className="text-gray-700">&nbsp;-&nbsp;{props.year}</span>
       </div>
-      <button className="self-center w-full md:w-auto flex-none p-2 mt-3 md:mt-0 ml-auto shadow-lg rounded-lg border-2 border-pink-700 text-pink-700 hover:bg-teal-100 active:bg-teal-100 focus:bg-teal-100">Search similar</button>
+      {
+        props.hasSubject &&
+        <button className="self-center w-full md:w-auto flex-none p-2 mt-3 md:mt-0 ml-auto shadow-lg rounded-lg border-2 border-pink-700 text-pink-700 hover:bg-teal-100 active:bg-teal-100 focus:bg-teal-100" onClick={props.onSearchSimilar}>Search similar</button>
+      }
   </div>
   )
 }
