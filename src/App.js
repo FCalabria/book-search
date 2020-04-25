@@ -54,7 +54,7 @@ class App extends React.Component {
               title={searchResult.title}
               author={searchResult.author_name && searchResult.author_name[0]}
               year={searchResult.first_publish_year}
-              isbn={searchResult.isbn[0]}
+              isbn={searchResult.isbn}
               hasSubject={!!searchResult.subject}
               onSearchSimilar={this.onSubjectSearch.bind(this, searchResult.subject[0])}
             />)}</div>
