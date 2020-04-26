@@ -4,7 +4,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 function SearchBar(props) {
   function handleChange(e) {
-    props.onChangeSearch(e.target.value)
+    const value = e.target.value.trim()
+    props.onChangeSearch(value)
   }
   function handleSubmit(e) {
     e.preventDefault()
