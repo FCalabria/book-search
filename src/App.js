@@ -3,6 +3,7 @@ import SearchBar from './components/SearchBar'
 import Loader from './components/Loader'
 import BookDetail from './components/BookDetail'
 import apiFetch from './utils/api'
+import {LanguageProvider, languages} from './language-context'
 
 class App extends React.Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class App extends React.Component {
   render() {
     return (
       <div className={`App flex items-center flex-col absolute inset-0 ${ !this.state.searchStarted ? 'justify-center' : 'mt-4'}`} >
+        <LanguageProvider value={languages.es}>
           <SearchBar onSearch={this.onNewSearch} onChangeSearch={this.onChangeSearchTerm} term={this.state.searchTerm}/>
           {
             (this.state.searchStarted && this.state.searchFound <=0) &&
@@ -60,6 +62,7 @@ class App extends React.Component {
             />)}</div>
             )
           }
+          </LanguageProvider>
         </div>
     );
   }
