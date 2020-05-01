@@ -10,6 +10,8 @@ function BookDetail(props) {
     if (props.isbn[newIndex]) {
       setImageId(props.isbn[newIndex])
       setImageIdIndex(newIndex)
+    } else {
+      setImageId('')
     }
   }
     return (
@@ -18,7 +20,10 @@ function BookDetail(props) {
         <div className="flex flex-wrap md:flex-no-wrap px-3 py-4 odd:bg-teal-300">
           <div className="w-20 sm:w-32 lg:w-40 mr-2 flex-grow-0 flex-shrink-0 bg-pink-200">
             <img
-              src={`http://covers.openlibrary.org/b/isbn/${imageId}-M.jpg?default=false`}
+              src={imageId
+                ? `http://covers.openlibrary.org/b/isbn/${imageId}-M.jpg?default=false`
+                : 'https://dummyimage.com/130x170/fed7e2/fed7e2.png'
+              }
               alt=""
               onError={onImageError}/>
           </div>
