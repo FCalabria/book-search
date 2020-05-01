@@ -6,7 +6,7 @@ import {LanguageConsumer} from '../language-context'
 function Loader(props) {
   return (
     <LanguageConsumer>
-    {language => (
+    {({language}) => (
       <div className="my-auto mx-3 text-center flex flex-col items-center">
         <div className="text-lg font-light">{props.error ? language.searchError : language.searching} {props.searchTerm}</div>
         {

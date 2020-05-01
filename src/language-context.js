@@ -1,13 +1,13 @@
 import React from 'react';
 
 export const languages = {
-  es: {
+  ES: {
     search: 'Busca un libro',
     similar: 'Buscar parecido',
     searching: 'Buscando',
     searchError: 'No hemos encontrado nada con'
   },
-  en: {
+  EN: {
     search: 'Search a book',
     similar: 'Search similar',
     searching: 'Searching',
@@ -15,6 +15,11 @@ export const languages = {
   },
 };
 
-const LanguageContext = React.createContext(languages.es);
+const LanguageContext = React.createContext({
+  selected: 'ES',
+  keys: Object.keys(languages),
+  language: languages.ES,
+  toggleLanguage: () => {}
+});
 export const LanguageProvider = LanguageContext.Provider;
 export const LanguageConsumer = LanguageContext.Consumer;

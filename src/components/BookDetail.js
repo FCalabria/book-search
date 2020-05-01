@@ -16,7 +16,7 @@ function BookDetail(props) {
   }
     return (
     <LanguageConsumer>
-    {language => (
+    {({language}) => (
         <div className="flex flex-wrap md:flex-no-wrap px-3 py-4 odd:bg-teal-300">
           <div className="w-20 sm:w-32 lg:w-40 mr-2 flex-grow-0 flex-shrink-0 bg-pink-200">
             <img

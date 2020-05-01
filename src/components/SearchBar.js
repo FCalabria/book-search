@@ -15,7 +15,7 @@ function SearchBar(props) {
 
   return (
     <LanguageConsumer>
-      {language => (
+      {({language}) => (
         <div>
           <form className="py-2 px-4 rounded-full bg-white shadow-lg" onSubmit={handleSubmit}>
             <input

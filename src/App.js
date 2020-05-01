@@ -2,6 +2,7 @@ import React from 'react';
 import SearchBar from './components/SearchBar'
 import Loader from './components/Loader'
 import BookDetail from './components/BookDetail'
+import LanguageToggler from './components/LanguageToggler'
 import apiFetch from './utils/api'
 import {LanguageProvider, languages} from './language-context'
 
@@ -13,10 +14,16 @@ class App extends React.Component {
       searchData: [],
       searchFound: -1,
       searchStarted: false,
+      language: {
+        language: languages.ES,
+        keys: Object.keys(languages),
+        selected: 'ES',
+      }
     }
     this.onNewSearch = this.onNewSearch.bind(this)
     this.onSubjectSearch = this.onSubjectSearch.bind(this)
     this.onChangeSearchTerm = this.onChangeSearchTerm.bind(this)
+    this.toggleLanguage = this.toggleLanguage.bind(this)
   }
 
   onChangeSearchTerm(searchTerm) {
@@ -40,10 +47,22 @@ class App extends React.Component {
       }))
   }
 
+  toggleLanguage(value) {
+    this.setState({language:{
+      language: languages[value],
+      keys: Object.keys(languages),
+      selected: value,
+    }})
+  }
+
   render() {
     return (
+    <LanguageProvider value={{
+      ...this.state.language,
+      toggleLanguage: this.toggleLanguage
+    }}>
       <div className={`App flex items-center flex-col absolute inset-0 ${ !this.state.searchStarted ? 'justify-center' : 'mt-4'}`} >
-        <LanguageProvider value={languages.es}>
+          <LanguageToggler></LanguageToggler>
           <SearchBar onSearch={this.onNewSearch} onChangeSearch={this.onChangeSearchTerm} term={this.state.searchTerm}/>
           {
             (this.state.searchStarted && this.state.searchFound <=0) &&
@@ -62,8 +81,8 @@ class App extends React.Component {
             />)}</div>
             )
           }
-          </LanguageProvider>
         </div>
+      </LanguageProvider>
     );
   }
 }
