@@ -36,6 +36,7 @@
     ]
   },
   "devDependencies": {
+    "snapshot-diff": "^0.7.0",
     "tailwindcss": "^1.2.0"
   }
 }

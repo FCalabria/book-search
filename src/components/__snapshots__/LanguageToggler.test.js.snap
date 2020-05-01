@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LanguageToggler should render correctly 1`] = `
+<select
+  class="absolute top-0 right-0 mt-3 mr-3 text-gray-700 bg-teal-100 border-pink-200 border-2 shadow-lg"
+>
+  <option
+    selected=""
+    value="ES"
+  >
+    ES
+  </option>
+  <option
+    value="EN"
+  >
+    EN
+  </option>
+</select>
+`;
