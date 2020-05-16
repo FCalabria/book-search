@@ -10,7 +10,7 @@ describe('App', () => {
   describe('language change', () => {
     test('should set spanish as the default language', () => {
       const {getByPlaceholderText} = render(<App />)
-      expect(getByPlaceholderText(languages.ES.search)).toBeTruthy()
+      expect(getByPlaceholderText(languages.ES.search)).toBeInTheDocument()
     })
     test('should change language in the state when toggleLanguage is called', () => {
       // Whitebox testing. Use only in complex parts. Not like here, but this is an example

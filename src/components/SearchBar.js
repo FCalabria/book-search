@@ -17,11 +17,12 @@ function SearchBar(props) {
     <LanguageConsumer>
       {({language}) => (
         <div>
-          <form className="py-2 px-4 rounded-full bg-white shadow-lg" onSubmit={handleSubmit}>
+          <form aria-label="Formulario de busqueda" className="py-2 px-4 rounded-full bg-white shadow-lg" onSubmit={handleSubmit}>
             <input
               type="text"
               value={props.term}
               onChange={handleChange}
+              aria-label={language.search}
               placeholder={language.search}
               className="bg-transparent"></input>
             <button type="submit" aria-label="Buscar" className="text-pink-700">

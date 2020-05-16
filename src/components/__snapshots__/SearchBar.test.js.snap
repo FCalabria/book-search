@@ -3,9 +3,11 @@
 exports[`Search bar should render correctly 1`] = `
 <div>
   <form
+    aria-label="Formulario de busqueda"
     class="py-2 px-4 rounded-full bg-white shadow-lg"
   >
     <input
+      aria-label="Busca un libro"
       class="bg-transparent"
       placeholder="Busca un libro"
       type="text"
