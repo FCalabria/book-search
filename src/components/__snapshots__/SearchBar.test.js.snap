@@ -9,6 +9,7 @@ exports[`Search bar should render correctly 1`] = `
     <input
       aria-label="Busca un libro"
       class="bg-transparent"
+      data-test="searchInput"
       placeholder="Busca un libro"
       type="text"
       value=""
@@ -16,6 +17,7 @@ exports[`Search bar should render correctly 1`] = `
     <button
       aria-label="Buscar"
       class="text-pink-700"
+      data-test="searchButton"
       type="submit"
     >
       <svg
