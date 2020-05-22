@@ -5,16 +5,16 @@ const Services = {}; loadServices();
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
   // if this is not specified, the test source must be passed as the second argument to the test runner.
-  src_folders: ['e2e/suites'],
+  src_folders: ['tests/e2e/suites'],
 
   // See https://nightwatchjs.org/guide/working-with-page-objects/
-  page_objects_path: 'e2e/pages',
+  page_objects_path: 'tests/e2e/pages',
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/#writing-custom-commands
   custom_commands_path:  '',
 
   // See https://nightwatchjs.org/guide/#external-globals
-  output_folder: 'e2e/output',
+  output_folder: 'tests/e2e/output',
 
   webdriver: {},
 
@@ -43,6 +43,7 @@ module.exports = {
         }
       },
 
+      // TODO: entender bien webdriver y cuándo es necesario
       webdriver: {
         start_process: true,
         port: 9515,

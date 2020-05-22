@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../utils/test-utils';
+import { render } from '../../tests/test-utils';
 import BookDetail from './BookDetail';
 
 describe('BookDetail', () => {

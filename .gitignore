@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-/e2e/output
+tests/e2e/output
 
 # production
 /build

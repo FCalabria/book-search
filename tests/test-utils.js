@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import {LanguageProvider, languages} from '../language-context'
+import {LanguageProvider, languages} from '../src/language-context'
 
 const toggleLanguageMock = jest.fn()
 const AllTheProviders = ({ children }) => {

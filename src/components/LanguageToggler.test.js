@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from '../utils/test-utils';
+import { render, fireEvent } from '../../tests/test-utils';
 import LanguageToggler from './LanguageToggler';
 import {languages} from '../language-context'
-import {toggleLanguageMock} from '../utils/test-utils'
+import {toggleLanguageMock} from '../../tests/test-utils'
 
 
 describe('LanguageToggler', () => {
