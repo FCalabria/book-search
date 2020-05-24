@@ -25,3 +25,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 chromedriver.log
+geckodriver.log
+selenium-server.log

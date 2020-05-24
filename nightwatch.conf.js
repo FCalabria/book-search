@@ -1,11 +1,13 @@
-const Services = {}; loadServices();
 const percy = require('@percy/nightwatch')
+const chromedriver = require('chromedriver')
+const geckodriver = require('geckodriver')
+const seleniumServer = require('selenium-server')
 
 module.exports = {
   src_folders: ['tests/e2e/suites'],
   page_objects_path: 'tests/e2e/pages',
   custom_commands_path: [ percy.path ],
-  globals_path: 'tests/e2e/envGlobals/local.js',
+  globals_path: 'tests/e2e/globals/server.js',
 
   output_folder: 'tests/e2e/output',
 
@@ -23,10 +25,44 @@ module.exports = {
       },
       desiredCapabilities : {
         browserName : 'chrome',
+      },
+
+      webdriver: {
+        start_process: true,
+        port: 9515,
+        server_path: chromedriver.path
+      }
+    },
+
+    firefox: {
+      desiredCapabilities : {
+        browserName : 'firefox',
+        alwaysMatch: {
+          // Enable this if you encounter unexpected SSL certificate errors in Firefox
+          // acceptInsecureCerts: true,
+          'moz:firefoxOptions': {
+            args: [
+              '-headless',
+              // '-verbose'
+            ],
+          }
+        }
+      },
+      webdriver: {
+        start_process: true,
+        port: 4444,
+        server_path: geckodriver.path,
+        cli_args: [
+          // very verbose geckodriver logs
+          // '-vv'
+        ]
+      }
+    },
+
+    chrome: {
+      desiredCapabilities : {
+        browserName : 'chrome',
         chromeOptions : {
-          // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
-          // w3c: false,
-          // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
           args: [
             //'--no-sandbox',
             //'--ignore-certificate-errors',
@@ -39,69 +75,7 @@ module.exports = {
       webdriver: {
         start_process: true,
         port: 9515,
-        server_path: (Services.chromedriver ? Services.chromedriver.path : '')
-      }
-    },
-
-    safari: {
-      desiredCapabilities : {
-        browserName : 'safari',
-        alwaysMatch: {
-          acceptInsecureCerts: false
-        }
-      },
-      webdriver: {
-        port: 4445,
-        start_process: true,
-        server_path: '/usr/bin/safaridriver'
-      }
-    },
-
-    firefox: {
-      desiredCapabilities : {
-        browserName : 'firefox',
-        alwaysMatch: {
-          // Enable this if you encounter unexpected SSL certificate errors in Firefox
-          // acceptInsecureCerts: true,
-          'moz:firefoxOptions': {
-            args: [
-              // '-headless',
-              // '-verbose'
-            ],
-          }
-        }
-      },
-      webdriver: {
-        start_process: true,
-        port: 4444,
-        server_path: (Services.geckodriver ? Services.geckodriver.path : ''),
-        cli_args: [
-          // very verbose geckodriver logs
-          // '-vv'
-        ]
-      }
-    },
-
-    chrome: {
-      desiredCapabilities : {
-        browserName : 'chrome',
-        chromeOptions : {
-          // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
-          // w3c: false,
-          // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
-          args: [
-            //'--no-sandbox',
-            //'--ignore-certificate-errors',
-            //'--allow-insecure-localhost',
-            //'--headless'
-          ]
-        }
-      },
-
-      webdriver: {
-        start_process: true,
-        port: 9515,
-        server_path: (Services.chromedriver ? Services.chromedriver.path : ''),
+        server_path: chromedriver.path,
         cli_args: [
           // --verbose
         ]
@@ -118,10 +92,10 @@ module.exports = {
       selenium: {
         start_process: true,
         port: 4444,
-        server_path: (Services.seleniumServer ? Services.seleniumServer.path : ''),
+        server_path: seleniumServer.path,
         cli_args: {
-          'webdriver.gecko.driver': (Services.geckodriver ? Services.geckodriver.path : ''),
-          'webdriver.chrome.driver': (Services.chromedriver ? Services.chromedriver.path : '')
+          'webdriver.gecko.driver': geckodriver.path,
+          'webdriver.chrome.driver': chromedriver.path
         }
       }
     },
@@ -130,8 +104,11 @@ module.exports = {
       extends: 'selenium',
       desiredCapabilities: {
         browserName: 'chrome',
+        javascriptEnabled: true,
+        acceptSslCerts: true,
         chromeOptions : {
-          w3c: false
+          w3c: false,
+          args: ['--headless']
         }
       }
     },
@@ -141,26 +118,10 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'firefox',
         'moz:firefoxOptions': {
-          args: [
-            // '-headless',
-            // '-verbose'
-          ]
+          args: ['-headless']
         }
       }
     }
   }
 };
 
-function loadServices() {
-  try {
-    Services.seleniumServer = require('selenium-server');
-  } catch (err) {}
-
-  try {
-    Services.chromedriver = require('chromedriver');
-  } catch (err) {}
-
-  try {
-    Services.geckodriver = require('geckodriver');
-  } catch (err) {}
-}
