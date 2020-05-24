@@ -5,6 +5,7 @@ module.exports = {
   src_folders: ['tests/e2e/suites'],
   page_objects_path: 'tests/e2e/pages',
   custom_commands_path: [ percy.path ],
+  globals_path: 'tests/e2e/envGlobals/local.js',
 
   output_folder: 'tests/e2e/output',
 
@@ -35,14 +36,10 @@ module.exports = {
         }
       },
 
-      // TODO: entender bien webdriver y cuándo es necesario
       webdriver: {
         start_process: true,
         port: 9515,
-        server_path: (Services.chromedriver ? Services.chromedriver.path : ''),
-        cli_args: [
-          // --verbose
-        ]
+        server_path: (Services.chromedriver ? Services.chromedriver.path : '')
       }
     },
 
