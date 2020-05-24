@@ -18,6 +18,7 @@
     "start": "npm run build:style && react-scripts start",
     "build": "npm run build:style && react-scripts build",
     "nightwatch": "percy exec -- nightwatch",
+    "test:ci": "echo \"run tests here\"",
     "test:unit": "react-scripts test",
     "test:e2e": "env BROWSER=none npm run start",
     "eject": "react-scripts eject"
