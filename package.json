@@ -22,7 +22,7 @@
     "test:e2e:local": "npm run build && npm run nightwatch",
     "test:e2e:local:multi": "npm run build && npm run nightwatch -- --env selenium.chrome,selenium.firefox",
     "test:e2e:ci": "npm run nightwatch -- -c nightwatch.ci.conf.js --retries 3 --env selenium.chrome,selenium.firefox",
-    "test:visual:ci": "percy exec -- nightwatch -c nightwatch.ci.conf.js --tag visual",
+    "test:visual:ci": "percy exec -- nightwatch -c nightwatch.ci.conf.js --tag visual --env selenium.chrome",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

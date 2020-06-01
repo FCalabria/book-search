@@ -9,4 +9,6 @@ baseConf.test_workers = {
   workers: 'auto'
 }
 
+baseConf.detailed_output = false
+
 module.exports = baseConf
