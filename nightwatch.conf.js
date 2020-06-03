@@ -121,6 +121,84 @@ module.exports = {
           args: ['-headless']
         }
       }
+    },
+
+    saucelabs: {
+      username: 'pcalabria',
+      access_key: 'e946850e-c948-4838-a50a-1dc86590f2aa',
+      selenium_port: 80,
+      selenium_host: 'ondemand.eu-central-1.saucelabs.com',
+      desiredCapabilities: {
+        javascriptEnabled: true,
+        acceptSslCerts: true,
+        build: 'build-local',
+        'tunnel-identifier': 'local',
+        recordVideo: true,
+        recordScreenshots: true,
+          "chromeOptions": {
+            "args" : ["--no-sandbox"],
+            "w3c": false
+          },
+      },
+      webdriver: {
+        start_process: false,
+        port: 80,
+      }
+    },
+
+    'saucelabs.chrome': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'chrome',
+        browserVersion: 'latest-1',
+        platformName: 'Windows 10',
+          "chromeOptions": {
+            "args" : ["--no-sandbox"],
+            "w3c": false
+          },
+      },
+    },
+
+    'saucelabs.ie': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'internet explorer',
+        browserVersion: 'latest',
+        platformName: 'Windows 10'
+      },
+    },
+
+    'saucelabs.safari': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'safari',
+        browserVersion: 'latest',
+        platformName: 'macOS 10.15',
+      },
+    },
+
+    'saucelabs.iPhone': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'Safari',
+        appiumVersion: '1.16.0',
+        deviceName: 'iPhone 8 Simulator',
+        deviceOrientation: 'portrait',
+        platformVersion: '13.2',
+        platformName: 'iOS',
+      },
+    },
+
+    'saucelabs.android': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        appiumVersion: '1.9.1',
+        deviceName: 'Samsung Galaxy S8 GoogleAPI Emulator',
+        deviceOrientation: 'portrait',
+        browserName: 'Chrome',
+        platformVersion: '8.1',
+        platformName: 'Android',
+      },
     }
   }
 };
