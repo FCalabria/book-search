@@ -6,7 +6,7 @@ const seleniumServer = require('selenium-server')
 module.exports = {
   src_folders: ['tests/e2e/suites'],
   page_objects_path: 'tests/e2e/pages',
-  custom_commands_path: [ percy.path ],
+  custom_commands_path: [ percy.path, 'tests/e2e/commands' ],
   globals_path: 'tests/e2e/globals/server.js',
 
   output_folder: 'tests/e2e/output',
@@ -126,8 +126,11 @@ module.exports = {
     saucelabs: {
       username: 'pcalabria',
       access_key: 'e946850e-c948-4838-a50a-1dc86590f2aa',
-      selenium_port: 80,
-      selenium_host: 'ondemand.eu-central-1.saucelabs.com',
+      'selenium_port': 80,
+      'selenium_host': 'ondemand.eu-central-1.saucelabs.com',
+      globals: {
+        isSaucelabs: true,
+      },
       desiredCapabilities: {
         javascriptEnabled: true,
         acceptSslCerts: true,
@@ -135,10 +138,6 @@ module.exports = {
         'tunnel-identifier': 'local',
         recordVideo: true,
         recordScreenshots: true,
-          "chromeOptions": {
-            "args" : ["--no-sandbox"],
-            "w3c": false
-          },
       },
       webdriver: {
         start_process: false,

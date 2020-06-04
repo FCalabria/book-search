@@ -1,10 +1,14 @@
 module.exports = {
   '@tags': ['language'],
+  afterEach: (browser, done) => {
+    browser.sauceEnd()
+    .end()
+    done()
+  },
   'It should have a language selector': browser => {
     const searchPage = browser.page.search()
     searchPage.navigate()
       .expect.section('@language').to.be.visible;
-    searchPage.end()
   },
   'It should have spanish by default': browser => {
     const searchPage = browser.page.search()
@@ -18,7 +22,6 @@ module.exports = {
       .getAttribute('@searchInput', 'placeholder', text => {
         searchPage.assert.ok(/busca/i.test(text.value), 'Input placeholder contains the word "busca"')
       })
-      .end()
   },
   'It should be possible to change to english': browser => {
     const searchPage = browser.page.search()
@@ -33,6 +36,5 @@ module.exports = {
       .getAttribute('@searchInput', 'placeholder', text => {
         searchPage.assert.ok(/search/i.test(text.value), 'Input placeholder contains the word "search"')
       })
-      .end()
   }
 }
