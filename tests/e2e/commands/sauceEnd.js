@@ -15,7 +15,8 @@ exports.command = function() {
 
   return saucelabs.updateJob('pcalabria', sessionid, {
       passed: this.currentTest.results.failed === 0,
-      name: jobName
+      name: jobName,
+      tags: [process.env.TRAVIS_JOB_NUMBER || 'local'],
   })
   .then(() => {
     return this

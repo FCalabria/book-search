@@ -135,7 +135,7 @@ module.exports = {
         javascriptEnabled: true,
         acceptSslCerts: true,
         build: 'build-local',
-        'tunnel-identifier': 'local',
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER || 'local',
         recordVideo: true,
         recordScreenshots: true,
       },
