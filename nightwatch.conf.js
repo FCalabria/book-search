@@ -124,8 +124,8 @@ module.exports = {
     },
 
     saucelabs: {
-      username: 'pcalabria',
-      access_key: 'e946850e-c948-4838-a50a-1dc86590f2aa',
+      username: process.env.SAUCE_USERNAME,
+      access_key: process.env.SAUCE_ACCESS_KEY,
       'selenium_port': 80,
       'selenium_host': 'ondemand.eu-central-1.saucelabs.com',
       globals: {
@@ -171,8 +171,8 @@ module.exports = {
       extends: 'saucelabs',
       desiredCapabilities: {
         browserName: 'safari',
-        browserVersion: 'latest',
-        platformName: 'macOS 10.15',
+        version: 'latest',
+        platform: 'macOS 10.15',
       },
     },
 
@@ -192,10 +192,10 @@ module.exports = {
       extends: 'saucelabs',
       desiredCapabilities: {
         appiumVersion: '1.9.1',
-        deviceName: 'Samsung Galaxy S8 GoogleAPI Emulator',
+        deviceName: 'Android Emulator',
         deviceOrientation: 'portrait',
         browserName: 'Chrome',
-        platformVersion: '8.1',
+        platformVersion: '6.0',
         platformName: 'Android',
       },
     }

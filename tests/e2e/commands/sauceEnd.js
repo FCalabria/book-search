@@ -5,15 +5,15 @@ exports.command = function() {
   }
 
   var saucelabs = new SauceLabs({
-      user: 'pcalabria',
-      key: 'e946850e-c948-4838-a50a-1dc86590f2aa',
+      user: process.env.SAUCE_USERNAME,
+      key: process.env.SAUCE_ACCESS_KEY,
       region: 'eu'
   });
 
   var sessionid = this.capabilities['webdriver.remote.sessionid'];
   var jobName = this.currentTest.name;
 
-  return saucelabs.updateJob('pcalabria', sessionid, {
+  return saucelabs.updateJob(process.env.SAUCE_USERNAME, sessionid, {
       passed: this.currentTest.results.failed === 0,
       name: jobName,
       tags: [process.env.TRAVIS_JOB_NUMBER || 'local'],
