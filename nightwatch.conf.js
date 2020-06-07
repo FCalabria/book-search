@@ -25,6 +25,7 @@ module.exports = {
       },
       desiredCapabilities : {
         browserName : 'chrome',
+        extendedDebugging : true,
       },
 
       webdriver: {

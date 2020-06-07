@@ -4,6 +4,7 @@ baseConf.test_settings.default.screenshots = {
   enabled: false,
   on_failure: false
 }
+baseConf.test_settings.default.desiredCapabilities.extendedDebugging = false
 baseConf.test_workers = {
   enabled: true,
   workers: 'auto'
