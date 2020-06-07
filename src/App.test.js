@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import TestRenderer from 'react-test-renderer';
 import App from './App';
 import {languages} from './language-context'
@@ -21,12 +21,16 @@ describe('App', () => {
     })
   })
   describe('onNewSearch', () => {
+    jest.mock('../src/components/BookDetail')
+    jest.mock('../src/components/SearchBar')
+    jest.mock('../src/components/LanguageToggler')
+    jest.mock('../src/components/Loader')
     const fakeResponse = {
       docs: [
-        {isbn: ['123'], subject: ['fake']},
-        {isbn: ['456'], subject: ['fake']},
-        {subject: ['fake']},
-        {isbn: ['789'], subject: ['fake']},
+        {isbn: ['123'], subject: ['fake'], author_name: ['same author']},
+        {isbn: ['456'], subject: ['fake'], author_name: ['same author']},
+        {subject: ['fake'], author_name: ['same author']},
+        {isbn: ['789'], subject: ['fake'], author_name: ['same author']},
       ],
       numFound: 4
     }
@@ -39,7 +43,7 @@ describe('App', () => {
       ['123%&ñá´üô', '123%25%26%C3%B1%C3%A1%C2%B4%C3%BC%C3%B4']
     ])('should call the API with the correct searchTerm when onNewSearch is fired', (term, expected) => {
       const appInstance = TestRenderer.create(<App />).getInstance()
-      appInstance.state.searchTerm = term
+      appInstance.onChangeSearchTerm(term)
       appInstance.onNewSearch()
       expect(apiFetch).toHaveBeenCalledTimes(1)
       // expect(apiFetch).toHaveBeenCalledWith(`search.json?q=${expected}&mode=ebooks&has_fulltext=true&page=1`)
@@ -49,6 +53,7 @@ describe('App', () => {
     })
     test('should set the filtered result on the state', async () => {
       const appInstance = TestRenderer.create(<App />).getInstance()
+      appInstance.onChangeSearchTerm('mockTerm')
       appInstance.state.searchTerm = 'mockTerm'
       await appInstance.onNewSearch()
 
@@ -59,6 +64,19 @@ describe('App', () => {
         fakeResponse.docs[1],
         fakeResponse.docs[3],
       ])
+    })
+
+    test('should render the filtered result', async () => {
+      // Blackbox testing version of the test on the top. Both have advantages and disadvantages
+      const {getByRole, getAllByText} = render(<App />)
+      const searchInput = getByRole('textbox')
+
+      fireEvent.change(searchInput, { target: { value: 'search term' }})
+      const searchForm = getByRole('form')
+      await fireEvent.submit(searchForm)
+
+      const results = getAllByText(fakeResponse.docs[0].author_name[0])
+      expect(results).toHaveLength(fakeResponse.numFound - 1)
     })
   })
   describe('onSubjectSearch', () => {
