@@ -11,8 +11,6 @@ module.exports = {
 
   output_folder: 'tests/e2e/output',
 
-  webdriver: {},
-
   test_settings: {
     default: {
       launch_url: 'http://localhost:3000',
@@ -131,12 +129,14 @@ module.exports = {
       'selenium_host': 'ondemand.eu-central-1.saucelabs.com',
       globals: {
         isSaucelabs: true,
+        waitForConditionTimeout: 10000,
+        waitForConditionPollInterval: 5000
       },
       desiredCapabilities: {
         javascriptEnabled: true,
         acceptSslCerts: true,
         build: 'build-local',
-        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER || 'local',
+        'tunnel-identifier': 'local',
         recordVideo: true,
         recordScreenshots: true,
       },

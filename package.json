@@ -20,7 +20,7 @@
     "test:e2e:local:multi": "npm run build && npm run nightwatch -- --env selenium.chrome,selenium.firefox",
     "test:e2e:local:saucelabs": "npm run build && npm run nightwatch -- --env saucelabs.chrome,saucelabs.ie,saucelabs.android",
     "test:e2e:ci": "npm run nightwatch -- -c nightwatch.ci.conf.js --retries 3 --env selenium.chrome,selenium.firefox",
-    "test:e2e:ci:saucelabs": "npm run nightwatch -- -c nightwatch.ci.conf.js --retries 3 --env saucelabs.chrome,saucelabs.ie,saucelabs.android",
+    "test:e2e:ci:saucelabs": "npm run nightwatch -- -c nightwatch.ci.conf.js --retries 3 --env saucelabs.chrome,saucelabs.android",
     "test:visual:ci": "percy exec -- nightwatch -c nightwatch.ci.conf.js --tag visual --env selenium.chrome",
     "eject": "react-scripts eject"
   },

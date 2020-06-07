@@ -7,7 +7,7 @@ exports.command = function() {
   var saucelabs = new SauceLabs({
       user: process.env.SAUCE_USERNAME,
       key: process.env.SAUCE_ACCESS_KEY,
-      region: 'eu'
+      region: process.env.CI ? '' : 'eu'
   });
 
   var sessionid = this.capabilities['webdriver.remote.sessionid'];
