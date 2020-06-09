@@ -7,7 +7,7 @@ module.exports = {
 
   custom_commands_path:  '',
 
-  globals_path : '',
+  globals_path : 'tests/e2e/globals/server.js',
   output_folder: 'tests/e2e/output',
 
   webdriver: {},
