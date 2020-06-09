@@ -27,7 +27,7 @@ function BookDetail(props) {
               alt=""
               onError={onImageError}/>
           </div>
-          <div className="flex flex-1 flex-wrap content-center mr-2">
+          <div className="flex flex-1 flex-wrap content-center mr-2" data-test="bookInfoWrapper">
             <span className="w-full text-xl font-medium">{props.title}</span>
             <span className="italic text-gray-700">{props.author}</span>
             <span className="text-gray-700">&nbsp;-&nbsp;{props.year}</span>

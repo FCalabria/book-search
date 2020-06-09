@@ -10,6 +10,7 @@ function LanguageToggler() {
       {({keys, selected, toggleLanguage}) => (<select
         className="absolute top-0 right-0 mt-3 mr-3 text-gray-700 bg-teal-100 border-pink-200 border-2 shadow-lg"
         defaultValue={selected}
+        data-test="languageSelect"
         onChange={e => toggleLanguage(e.target.value)}
       >
         {renderOptions(keys)}
@@ -20,4 +21,3 @@ function LanguageToggler() {
 }
 
 export default LanguageToggler;
-
