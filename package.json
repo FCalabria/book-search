@@ -18,7 +18,7 @@
     "start": "npm run build:style && react-scripts start",
     "build": "npm run build:style && react-scripts build",
     "test": "react-scripts test",
-    "test:ci": "npm run build && npm run test && nightwatch -c nigthwatch.ci.conf.js",
+    "test:ci": "npm run build && npm run test && nightwatch -c nigthwatch.ci.conf.js --retries 3 --env selenium.chrome,selenium.firefox,saucelabs.android",
     "test:local": "npm run build && npm run nightwatch",
     "test:local:saucelabs": "npm run build && npm run nightwatch -- --env saucelabs.chrome,saucelabs.ie,saucelabs.android",
     "eject": "react-scripts eject",

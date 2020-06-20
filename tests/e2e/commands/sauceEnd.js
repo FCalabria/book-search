@@ -7,12 +7,14 @@ exports.command = function() {
   */
   this.perform(() => {
     if (!this.globals.isSaucelabs) {
-      return Promise.resolve(this)
+      return this
     }
 
     var saucelabs = new SauceLabs({
         user: process.env.SAUCE_USERNAME,
         key: process.env.SAUCE_ACCESS_KEY,
+        // Travis dont allow to set a custom region, it always uses the default
+        // another option is to use a custom script to start the tunnel on eu session
         region: process.env.CI ? '' : 'eu'
     });
 
@@ -24,9 +26,7 @@ exports.command = function() {
         name: jobName,
         tags: [process.env.TRAVIS_JOB_NUMBER || 'local'],
     })
-    .then(() => {
-      return this
-    })
+    .then(() => this)
   })
 
 };
