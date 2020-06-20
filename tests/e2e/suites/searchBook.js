@@ -5,7 +5,9 @@ module.exports = {
     searchPage = browser.page.search()
   },
   afterEach: (browser) => {
-    browser.end()
+    browser
+    .sauceEnd()
+    .end()
   },
   'It should have input and search button': () => {
     searchPage.navigate()

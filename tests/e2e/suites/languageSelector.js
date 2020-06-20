@@ -1,9 +1,11 @@
 module.exports = {
   '@tags': ['language'],
   afterEach: (browser) => {
-    browser.end()
+    browser
+    .sauceEnd()
+    .end()
   },
-  'It should a language selector': (browser) => {
+  'It should have a language selector': (browser) => {
     const searchPage = browser.page.search()
     searchPage.navigate()
       .expect.section('@language').to.be.visible

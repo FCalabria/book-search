@@ -1,50 +1,34 @@
-const Services = {}; loadServices();
+const chromedriver = require('chromedriver')
+const geckodriver = require('geckodriver')
+const seleniumServer = require('selenium-server')
 
 module.exports = {
   src_folders: ['tests/e2e/suites'],
-
   page_objects_path: 'tests/e2e/pages',
+  custom_commands_path: ['tests/e2e/commands' ],
+  globals_path: 'tests/e2e/globals/server.js',
 
-  custom_commands_path:  '',
-
-  globals_path : 'tests/e2e/globals/server.js',
   output_folder: 'tests/e2e/output',
-
-  webdriver: {},
 
   test_settings: {
     default: {
+      launch_url: 'http://localhost:3000',
       disable_error_log: false,
-      launch_url: 'http://localhost:3000/',
 
       screenshots: {
         enabled: false,
         path: 'screens',
         on_failure: true
       },
-
-      desiredCapabilities: {
-        browserName : 'chrome'
+      desiredCapabilities : {
+        browserName : 'chrome',
+        extendedDebugging : true,
       },
 
       webdriver: {
         start_process: true,
         port: 9515,
-        server_path: (Services.geckodriver ? Services.geckodriver.path : '')
-      }
-    },
-
-    safari: {
-      desiredCapabilities : {
-        browserName : 'safari',
-        alwaysMatch: {
-          acceptInsecureCerts: false
-        }
-      },
-      webdriver: {
-        port: 4445,
-        start_process: true,
-        server_path: '/usr/bin/safaridriver'
+        server_path: chromedriver.path
       }
     },
 
@@ -56,7 +40,7 @@ module.exports = {
           // acceptInsecureCerts: true,
           'moz:firefoxOptions': {
             args: [
-              // '-headless',
+              '-headless',
               // '-verbose'
             ],
           }
@@ -65,7 +49,7 @@ module.exports = {
       webdriver: {
         start_process: true,
         port: 4444,
-        server_path: (Services.geckodriver ? Services.geckodriver.path : ''),
+        server_path: geckodriver.path,
         cli_args: [
           // very verbose geckodriver logs
           // '-vv'
@@ -77,11 +61,8 @@ module.exports = {
       desiredCapabilities : {
         browserName : 'chrome',
         chromeOptions : {
-          // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
-          // w3c: false,
-          // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
           args: [
-            //'--no-sandbox',
+            // '--no-sandbox',
             //'--ignore-certificate-errors',
             //'--allow-insecure-localhost',
             '--headless'
@@ -92,12 +73,13 @@ module.exports = {
       webdriver: {
         start_process: true,
         port: 9515,
-        server_path: (Services.chromedriver ? Services.chromedriver.path : ''),
+        server_path: chromedriver.path,
         cli_args: [
           // --verbose
         ]
       }
     },
+
 
     //////////////////////////////////////////////////////////////////////////////////
     // Configuration for when using the Selenium service, either locally or remote,  |
@@ -108,10 +90,10 @@ module.exports = {
       selenium: {
         start_process: true,
         port: 4444,
-        server_path: (Services.seleniumServer ? Services.seleniumServer.path : ''),
+        server_path: seleniumServer.path,
         cli_args: {
-          'webdriver.gecko.driver': (Services.geckodriver ? Services.geckodriver.path : ''),
-          'webdriver.chrome.driver': (Services.chromedriver ? Services.chromedriver.path : '')
+          'webdriver.gecko.driver': geckodriver.path,
+          'webdriver.chrome.driver': chromedriver.path
         }
       }
     },
@@ -120,8 +102,11 @@ module.exports = {
       extends: 'selenium',
       desiredCapabilities: {
         browserName: 'chrome',
+        javascriptEnabled: true,
+        acceptSslCerts: true,
         chromeOptions : {
-          w3c: false
+          w3c: false,
+          args: ['--headless']
         }
       }
     },
@@ -131,26 +116,88 @@ module.exports = {
       desiredCapabilities: {
         browserName: 'firefox',
         'moz:firefoxOptions': {
-          args: [
-            // '-headless',
-            // '-verbose'
-          ]
+          args: ['-headless']
         }
       }
+    },
+
+    saucelabs: {
+      username: process.env.SAUCE_USERNAME,
+      access_key: process.env.SAUCE_ACCESS_KEY,
+      'selenium_port': 80,
+      'selenium_host': 'ondemand.eu-central-1.saucelabs.com',
+      globals: {
+        isSaucelabs: true,
+        waitForConditionTimeout: 10000,
+        waitForConditionPollInterval: 5000
+      },
+      desiredCapabilities: {
+        javascriptEnabled: true,
+        acceptSslCerts: true,
+        build: 'build-local',
+        'tunnel-identifier': 'local',
+        recordVideo: true,
+        recordScreenshots: true,
+      },
+      webdriver: {
+        start_process: false,
+        port: 80,
+      }
+    },
+
+    'saucelabs.chrome': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'chrome',
+        browserVersion: 'latest-1',
+        platformName: 'Windows 10',
+          "chromeOptions": {
+            "args" : ["--no-sandbox"],
+            "w3c": false
+          },
+      },
+    },
+
+    'saucelabs.ie': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'internet explorer',
+        browserVersion: 'latest',
+        platformName: 'Windows 10'
+      },
+    },
+
+    'saucelabs.safari': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'safari',
+        version: 'latest',
+        platform: 'macOS 10.15',
+      },
+    },
+
+    'saucelabs.iPhone': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        browserName: 'Safari',
+        appiumVersion: '1.16.0',
+        deviceName: 'iPhone 8 Simulator',
+        deviceOrientation: 'portrait',
+        platformVersion: '13.2',
+        platformName: 'iOS',
+      },
+    },
+
+    'saucelabs.android': {
+      extends: 'saucelabs',
+      desiredCapabilities: {
+        appiumVersion: '1.9.1',
+        deviceName: 'Android Emulator',
+        deviceOrientation: 'portrait',
+        browserName: 'Chrome',
+        platformVersion: '6.0',
+        platformName: 'Android',
+      },
     }
   }
 };
-
-function loadServices() {
-  try {
-    Services.seleniumServer = require('selenium-server');
-  } catch (err) {}
-
-  try {
-    Services.chromedriver = require('chromedriver');
-  } catch (err) {}
-
-  try {
-    Services.geckodriver = require('geckodriver');
-  } catch (err) {}
-}
